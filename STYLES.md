@@ -246,7 +246,7 @@ El bloque de Services usa `<details>`/`<summary>` nativos para el acordeón (pri
     Top:    [wordmark "pulsar" + "studio"]     [services list]
     Plus:   [+  +  +  +]                       <!-- ds-plus markers -->
     Bottom: [tagline two-tone]                 [CTA card "hablemos"]
-    Foot:   [© 2026 Pulsar Studio]
+    Foot:   [© 2026 Pulsar Studio · A brand of Inercia Studio LLC]
   </div>
 </section>
 ```

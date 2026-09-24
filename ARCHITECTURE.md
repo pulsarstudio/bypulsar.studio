@@ -26,7 +26,9 @@ Cuando un item temporal se sustituya por su valor real, mover su línea a la sec
 ### Regla absoluta
 
 > **Inercia** (entidad facturadora) NO aparece en NINGÚN material público:
-> ni footer, ni meta tags, ni copy, ni imágenes, ni assets de redes.
+> ni meta tags, ni copy, ni imágenes, ni assets de redes.
+> **Única excepción aprobada:** la línea de copyright `© {year} Pulsar Studio · A brand of Inercia Studio LLC`
+> (footer, hero y overlay del menú), alimentada por `brand.legalEntity` en `src/config.ts`.
 > Si en el futuro hay obligación legal (aviso legal/política de privacidad), se hace en una ruta `/legal` con disclosure mínimo.
 
 ### Líneas de servicio (todas al mismo nivel)
