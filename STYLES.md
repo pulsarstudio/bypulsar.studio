@@ -154,6 +154,7 @@ Definidas en `tailwind.config.mjs`, `src/styles/globals.css`, `IntroOverlay.astr
 | `ds-heading-sub` | Subtítulo / nombre en card |
 | `ds-italic` | Itálica light de énfasis |
 | `ds-body` | Párrafo cuerpo |
+| `ds-pill` | Tag pill blanca sobre dark (categorías de servicios, tags de proyectos) |
 | `ds-legal-entity` + `ds-legal-sep` | Línea de copyright: "A brand of …" baja de línea en móvil; inline con " · " desde `md` |
 
 ### Buttons

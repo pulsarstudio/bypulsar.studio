@@ -41,7 +41,7 @@ import { services, social } from "../config";
                 </p>
                 <ul class="service-cats">
                   {service.categories.slice(0, 4).map((c) => (
-                    <li class="service-pill">{c}</li>
+                    <li class="ds-pill">{c}</li>
                   ))}
                   {service.categories.length > 4 && (
                     <li class="service-pill-more">
@@ -289,18 +289,6 @@ import { services, social } from "../config";
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-  }
-
-  .service-pill {
-    display: inline-flex;
-    align-items: center;
-    background: #ffffff;
-    color: #0a0a0a;
-    border-radius: 999px;
-    padding: 0.5rem 1rem;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1;
   }
 
   .service-pill-more {

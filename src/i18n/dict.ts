@@ -21,6 +21,7 @@ type Dict = Record<string, string>;
 export const en: Dict = {
   // Nav
   "nav.services": "Services",
+  "nav.work": "Work",
   "nav.cadence": "Cadence",
   "nav.team": "Team",
   "nav.contact": "Contact",
@@ -80,6 +81,12 @@ export const en: Dict = {
   "cadence.feature.4": "Cadence AI",
 
   // Studio (team) section
+  "work.eyebrow": "Selected work",
+  "work.title": "work.",
+  "work.pattone.client": "Club Randonneurs · Madrid",
+  "work.pattone.lead": "A real running crew with events and collabs, but no identity or system holding it together. We built its visual language, a site designed for whoever lands on it, and a platform the club updates by chat.",
+  "work.pexter.client": "Pet care · US",
+  "work.pexter.lead": "A storefront that makes dog waste gear feel like a brand, plus AI product compositions built from existing photos — the brand's personality, no new shoot.",
   "studio.eyebrow": "the team",
   "studio.title.bright": "two of us.",
   "studio.title.fade": "one signal — engineering and creative direction tuned to the same frequency.",
@@ -110,6 +117,7 @@ export const en: Dict = {
 
 export const es: Dict = {
   "nav.services": "Servicios",
+  "nav.work": "Proyectos",
   "nav.cadence": "Cadence",
   "nav.team": "Equipo",
   "nav.contact": "Contacto",
@@ -163,6 +171,12 @@ export const es: Dict = {
   "cadence.feature.3": "Tienda",
   "cadence.feature.4": "Cadence AI",
 
+  "work.eyebrow": "Trabajo seleccionado",
+  "work.title": "proyectos.",
+  "work.pattone.client": "Club Randonneurs · Madrid",
+  "work.pattone.lead": "Una comunidad de running real, con eventos y colaboraciones, pero sin identidad ni sistema que lo reuniera todo. Construimos su lenguaje visual, una web pensada desde quien la visita y una plataforma que el club actualiza por chat.",
+  "work.pexter.client": "Productos para mascotas · EE. UU.",
+  "work.pexter.lead": "Una tienda que convierte accesorios para perros en marca, y composiciones de producto con IA a partir de fotos existentes: la personalidad de la marca, sin un shooting nuevo.",
   "studio.eyebrow": "el equipo",
   "studio.title.bright": "somos dos.",
   "studio.title.fade": "una señal — ingeniería y dirección creativa sintonizadas en la misma frecuencia.",
@@ -192,6 +206,7 @@ export const fr: Dict = {
   "nav.services": "Services",
   "nav.cadence": "Cadence",
   "nav.team": "Équipe",
+  "nav.work": "Projets",
   "nav.contact": "Contact",
   "nav.home": "Accueil",
 
@@ -243,6 +258,12 @@ export const fr: Dict = {
   "cadence.feature.3": "Boutique",
   "cadence.feature.4": "Cadence AI",
 
+  "work.eyebrow": "Travaux choisis",
+  "work.title": "projets.",
+  "work.pattone.client": "Club Randonneurs · Madrid",
+  "work.pattone.lead": "Une vraie communauté de running, avec événements et collaborations, mais sans identité ni système pour tout réunir. Nous avons créé son langage visuel, un site pensé pour ceux qui le visitent et une plateforme que le club met à jour par chat.",
+  "work.pexter.client": "Produits pour animaux · US",
+  "work.pexter.lead": "Une boutique qui fait des accessoires pour chiens une vraie marque, et des compositions produit par IA à partir de photos existantes : la personnalité de la marque, sans nouveau shooting.",
   "studio.eyebrow": "l'équipe",
   "studio.title.bright": "nous sommes deux.",
   "studio.title.fade": "un signal — ingénierie et direction créative accordées sur la même fréquence.",

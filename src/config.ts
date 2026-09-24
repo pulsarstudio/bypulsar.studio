@@ -114,6 +114,35 @@ export const services: Service[] = [
   },
 ];
 
+export type Project = {
+  /** Stable slug used to build i18n keys: work.<key>.client / .lead */
+  i18nKey: string;
+  name: string;
+  client: string;
+  /** Omit until the live URL is confirmed — the row renders without a link. */
+  url?: string;
+  categories: string[];
+  lead: string;
+};
+
+export const projects: Project[] = [
+  {
+    i18nKey: "pattone",
+    name: "Pattone",
+    client: "Club Randonneurs · Madrid",
+    categories: ["Branding", "Web", "Cadence"],
+    lead: "A real running crew with events and collabs, but no identity or system holding it together. We built its visual language, a site designed for whoever lands on it, and a platform the club updates by chat.",
+  },
+  {
+    i18nKey: "pexter",
+    name: "Pexter",
+    client: "Pet care · US",
+    url: "https://www.pexter.us",
+    categories: ["Web", "E-commerce", "AI assets"],
+    lead: "A storefront that makes dog waste gear feel like a brand, plus AI product compositions built from existing photos — the brand's personality, no new shoot.",
+  },
+];
+
 export const social = {
   // TODO: confirmar email real
   email: "hello@bypulsar.studio",
@@ -131,6 +160,7 @@ export const cadence = {
 
 export const nav = [
   { label: "Services", href: "#services", i18nKey: "nav.services" },
+  { label: "Work", href: "#work", i18nKey: "nav.work" },
   { label: "Cadence", href: "#cadence", i18nKey: "nav.cadence" },
   { label: "Team", href: "#team", i18nKey: "nav.team" },
   { label: "Contact", href: "#contact", i18nKey: "nav.contact" },
