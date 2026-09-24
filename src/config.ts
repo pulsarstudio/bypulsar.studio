@@ -1,6 +1,6 @@
 // Single source of truth — Pulsar Studio public site.
 // Edit this file to update brand, team, services, social links across the site.
-// Inercia (entidad facturadora) NUNCA aparece aquí ni en ningún material público.
+// Inercia (entidad facturadora) solo aparece en la línea de copyright vía brand.legalEntity.
 
 export const brand = {
   name: "Pulsar Studio",
@@ -8,6 +8,7 @@ export const brand = {
   domain: "bypulsar.studio",
   url: "https://bypulsar.studio",
   city: "Madrid",
+  legalEntity: "Inercia Studio LLC",
   tagline: "Design and code for brands in motion.",
   description:
     "One signal, two operators. Design and code for the clubs, gyms and communities that move.",

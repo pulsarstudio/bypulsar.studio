@@ -70,7 +70,7 @@ import LanguageSwitcher from "./LanguageSwitcher.astro";
     <a href={`mailto:${social.email}`} class="nav-overlay-email">
       <span aria-hidden="true">+</span> {social.email}
     </a>
-    <p class="nav-overlay-copy">© {new Date().getFullYear()} {brand.name}</p>
+    <p class="nav-overlay-copy">© {new Date().getFullYear()} {brand.name}<span class="ds-legal-entity"><span class="ds-legal-sep" aria-hidden="true"> · </span>A brand of {brand.legalEntity}</span></p>
   </div>
 </div>
 

@@ -233,4 +233,13 @@
     @apply relative;
     padding: clamp(2rem, 5vw, 5rem);
   }
+
+  /* Copyright: "A brand of …" en su propia línea en móvil, inline con separador desde md */
+  .ds-legal-entity {
+    @apply block md:inline;
+  }
+
+  .ds-legal-sep {
+    @apply hidden md:inline;
+  }
 }
