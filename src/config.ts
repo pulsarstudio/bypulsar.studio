@@ -130,6 +130,7 @@ export const projects: Project[] = [
     i18nKey: "pattone",
     name: "Pattone",
     client: "Club Randonneurs · Madrid",
+    url: "https://pattone.com/en/",
     categories: ["Branding", "Web", "Cadence"],
     lead: "A real running crew with events and collabs, but no identity or system holding it together. We built its visual language, a site designed for whoever lands on it, and a platform the club updates by chat.",
   },
