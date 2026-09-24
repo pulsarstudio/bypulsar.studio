@@ -8,6 +8,7 @@ export const brand = {
   domain: "bypulsar.studio",
   url: "https://bypulsar.studio",
   city: "Madrid",
+  legalBrand: "Inercia Studio",
   legalEntity: "Inercia Studio LLC",
   tagline: "Design and code for brands in motion.",
   description:

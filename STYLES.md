@@ -119,6 +119,7 @@ Definidas en `tailwind.config.mjs`, `src/styles/globals.css`, `IntroOverlay.astr
 | `marquee` | `animate-marquee` | 40s loop |
 | `fade-up` (vía `[data-reveal]`) | mount | 0.8s, gateado por intro |
 | `letter-in/out` | scoped intro | 0.5s c/u |
+| `signature-in/out` | scoped intro (firma bajo el wordmark) | 0.6s in @0.8s · 0.4s out @2.5s |
 | `intro-out` | scoped intro | 0.8s |
 | `nav-in` | scoped overlay menu | 0.4s |
 
