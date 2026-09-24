@@ -25,7 +25,7 @@ Si vas a tocar código, abre los cuatro.
 - La marca pública es **Pulsar Studio**. El wordmark es **`pulsar`** lowercase (sin `®`). Las versiones largas siempre como "Pulsar Studio" (capitalizado en copy de cuerpo) o `pulsar studio` (en headings tipo Fabrica).
 - **Inercia** es la entidad facturadora interna. **NUNCA** debe aparecer en código público:
   - ni en copy, meta tags, OG, footer, alt de imágenes, ni en assets
-  - excepción aprobada: la línea de copyright `© {year} Pulsar Studio · A brand of Inercia Studio LLC` (footer, hero, overlay del menú) vía `brand.legalEntity`
+  - excepción aprobada: la línea de copyright `© {year} Pulsar Studio · A brand of Inercia Studio LLC` (footer, hero, overlay del menú) vía `brand.legalEntity`, y la firma `a brand of Inercia Studio` bajo el wordmark del loader (`IntroOverlay`) vía `brand.legalBrand`
   - excepción acordada y temporal: la URL del Calendly `calendly.com/inercia/30min` (visible solo al click). Hay TODO para migrar.
 - Si en una iteración alguien añade contenido público que mencione Inercia → **rechazar** o pedir confirmación explícita.
 

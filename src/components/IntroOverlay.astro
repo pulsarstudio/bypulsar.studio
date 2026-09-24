@@ -1,4 +1,6 @@
 ---
+import { brand } from "../config";
+
 const letters = ["p", "u", "l", "s", "a", "r"];
 ---
 
@@ -8,6 +10,7 @@ const letters = ["p", "u", "l", "s", "a", "r"];
       <span style={`--i:${i}`}>{l}</span>
     ))}
   </div>
+  <p class="intro-signature">a brand of {brand.legalBrand}</p>
 </div>
 
 <style>
@@ -17,8 +20,10 @@ const letters = ["p", "u", "l", "s", "a", "r"];
     z-index: 100;
     background: #0a0a0a;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: clamp(12px, 1.5vw, 20px);
     animation: intro-out 0.8s 3.3s cubic-bezier(0.76, 0, 0.24, 1) forwards;
     will-change: transform;
   }
@@ -42,6 +47,32 @@ const letters = ["p", "u", "l", "s", "a", "r"];
       letter-in 0.5s ease-out forwards calc(var(--i) * 0.1s),
       letter-out 0.5s ease-in forwards calc(2.5s + var(--i) * 0.05s);
     will-change: transform, opacity;
+  }
+
+  .intro-signature {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: clamp(11px, 1vw, 13px);
+    letter-spacing: 0.2em;
+    color: #8a8a8a;
+    opacity: 0;
+    animation:
+      signature-in 0.6s ease-out forwards 0.8s,
+      signature-out 0.4s ease-in forwards 2.5s;
+  }
+
+  @keyframes signature-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes signature-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
   }
 
   @keyframes letter-in {

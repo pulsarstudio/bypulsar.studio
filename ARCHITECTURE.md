@@ -28,7 +28,8 @@ Cuando un item temporal se sustituya por su valor real, mover su línea a la sec
 > **Inercia** (entidad facturadora) NO aparece en NINGÚN material público:
 > ni meta tags, ni copy, ni imágenes, ni assets de redes.
 > **Única excepción aprobada:** la línea de copyright `© {year} Pulsar Studio · A brand of Inercia Studio LLC`
-> (footer, hero y overlay del menú), alimentada por `brand.legalEntity` en `src/config.ts`.
+> (footer, hero y overlay del menú), alimentada por `brand.legalEntity` en `src/config.ts`,
+> más la firma `a brand of Inercia Studio` bajo el wordmark del loader (`brand.legalBrand`).
 > Si en el futuro hay obligación legal (aviso legal/política de privacidad), se hace en una ruta `/legal` con disclosure mínimo.
 
 ### Líneas de servicio (todas al mismo nivel)
@@ -99,8 +100,8 @@ Preloader full-screen monocromo dark, primera carga por sesión.
 | Fase | t (s) | Qué pasa |
 |---|---|---|
 | 1 — Letras entran | 0 → 1.0 | `p-u-l-s-a-r` lowercase suben desde abajo, stagger 0.1s, 0.5s cada una |
-| 2 — Hold | 1.0 → 2.5 | Wordmark `pulsar` estable |
-| 3 — Letras salen | 2.5 → 3.1 | Suben fuera, stagger reverso 0.05s |
+| 2 — Hold | 1.0 → 2.5 | Wordmark `pulsar` estable; firma `a brand of Inercia Studio` aparece en fade (0.8 → 1.4) |
+| 3 — Letras salen | 2.5 → 3.1 | Suben fuera, stagger reverso 0.05s; la firma se desvanece (2.5 → 2.9) |
 | 4 — Overlay sube | 3.3 → 4.1 | Fondo negro se desliza arriba, revela home |
 | 5 — Hero reveal | 4.1 → 5.0 | Hero hace fade-up con stagger por elemento |
 
