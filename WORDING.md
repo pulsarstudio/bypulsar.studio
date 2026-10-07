@@ -141,6 +141,15 @@ Construcción favorita para hablar del estudio sin separar al equipo:
 | Cadence | `+ our SaaS` | "cadence." |
 | Team | `+ the team` | "two of us. one signal — engineering and creative direction tuned to the same frequency." |
 
+### Cadence pages
+
+| Página | Title | Secciones |
+|---|---|---|
+| `/cadence` | `cadence.` (eyebrow "our SaaS", lead del home) | `how it works.` (By chat · Phone and web · By invitation) · `support.` |
+| `/cadence/legal` | `privacy.` | `who we are.` · `who uses cadence.` · `what we collect.` · `why we use it.` · `ai providers.` · `other providers.` · `transfers.` · `how long we keep it.` · `your rights.` · `security.` · `changes.` |
+
+La política se escribe en lenguaje llano, frases cortas, sin afirmaciones legales más allá de los artículos del RGPD citados. "Cadence on the web" en vez de "web admin" (el copy promete "no panels").
+
 ### Services — short clear titles + value-led leads
 
 Los **titulares** son cortos y dicen LO QUE ES (no jerga, no metáforas). El **lead** es donde aparece el valor / qué problema resuelve. La jerga técnica vive en las pills de categorías. Cada servicio es un add-on que **se integra a Cadence** — narrativa "5 piezas, 1 plataforma".

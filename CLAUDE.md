@@ -77,6 +77,7 @@ src/
     globals.css body, html, [data-reveal], reduced-motion (importa ds.css)
   layouts/Layout.astro    SEO, fonts, Lenis, IntroOverlay, ConsentBanner
   pages/index.astro       compone secciones
+  pages/cadence/          /cadence y /cadence/legal (privacidad de la app de Cadence)
   config.ts               brand/team/services/social — si cambia copy, cambia aquí
 
 ARCHITECTURE.md  arquitectura técnica + estable vs temporal
@@ -95,6 +96,8 @@ CLAUDE.md        este archivo
 | Añadir un nuevo botón / card / heading reusable | `src/styles/ds.css` (en `@layer components`) + documentar en `STYLES.md` |
 | Cambiar duración/timing de la intro animation | `src/components/IntroOverlay.astro` (CSS scoped) + actualizar tabla en `ARCHITECTURE.md` y `STYLES.md` |
 | Añadir GA4 / Clarity | `src/config.ts → tracking` (IDs) — el gating ya está en `Layout.astro` y `ConsentBanner.astro` |
+| Cambiar la política de privacidad de Cadence | `src/i18n/dict.ts` (`cadence.legal.*`, en/es/fr) + subir `cadence.privacy.version` / `updated` en `src/config.ts` |
+| Enlazar desde la app a una página en un idioma | `?lang=es` (o `en`, `fr`) en la URL |
 | Añadir nueva sección a la home | crear `src/components/X.astro` usando `ds-section` + `ds-section-inner`, importar en `src/pages/index.astro` |
 
 ## Comandos

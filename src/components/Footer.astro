@@ -1,6 +1,7 @@
 ---
-import { brand, social, cadence, nav } from "../config";
+import { brand, social, cadence, nav, sectionHref } from "../config";
 const year = new Date().getFullYear();
+const { pathname } = Astro.url;
 ---
 
 <footer class="footer">
@@ -29,7 +30,7 @@ const year = new Date().getFullYear();
         <ul>
           <li><a href="/" data-i18n="footer.home">Home</a></li>
           {nav.map((item) => (
-            <li><a href={item.href} data-i18n={item.i18nKey}>{item.label}</a></li>
+            <li><a href={sectionHref(item.href, pathname)} data-i18n={item.i18nKey}>{item.label}</a></li>
           ))}
         </ul>
       </div>
@@ -43,9 +44,7 @@ const year = new Date().getFullYear();
             </a>
           </li>
           <li>
-            <a href={cadence.url} target="_blank" rel="noopener">
-              Cadence <span aria-hidden="true">↗</span>
-            </a>
+            <a href={cadence.page}>Cadence</a>
           </li>
           <li>
             <a href={`mailto:${social.email}`}>Email</a>

@@ -30,7 +30,9 @@ Cuando un item temporal se sustituya por su valor real, mover su línea a la sec
 > **Única excepción aprobada:** la línea de copyright `© {year} Pulsar Studio · A brand of Inercia Studio LLC`
 > (footer, hero y overlay del menú), alimentada por `brand.legalEntity` en `src/config.ts`,
 > más la firma `a brand of Inercia Studio` bajo el wordmark del loader (`brand.legalBrand`).
-> Si en el futuro hay obligación legal (aviso legal/política de privacidad), se hace en una ruta `/legal` con disclosure mínimo.
+> La política de privacidad de Cadence vive en `/cadence/legal`. El responsable del tratamiento sale de UN valor,
+> `cadence.privacy.controller` en `src/config.ts` (hoy "Pulsar Studio"); si Alex decide que debe ser la entidad legal,
+> se cambia ahí y es una excepción más a esta regla, aprobada explícitamente.
 
 ### Líneas de servicio (todas al mismo nivel)
 
@@ -65,9 +67,12 @@ src/
   config.ts        single source of truth (brand, team, services, social)
   env.d.ts         types
   layouts/
-    Layout.astro   SEO, fonts, Lenis init, GA4/Clarity gateados, IntroOverlay, ConsentBanner
+    Layout.astro   SEO, fonts, Lenis init, GA4/Clarity gateados, IntroOverlay (`intro={false}` lo quita), ConsentBanner
   pages/
     index.astro    home — compone todas las secciones
+    cadence/
+      index.astro  /cadence — qué es Cadence, app + web, por invitación, soporte (URL de soporte de las stores)
+      legal.astro  /cadence/legal — política de privacidad de la app y la web de Cadence (la abre la app en un navegador interno)
   styles/
     globals.css    body/html, [data-reveal], reduced-motion (importa ds.css)
     ds.css         design system — clases ds-* en @layer components
@@ -121,6 +126,13 @@ Esta sección lista todo lo que está como TODO. Cuando se reemplace por valor r
 - [ ] Microsoft Clarity project ID en `src/config.ts → tracking.clarityId`
 - [ ] (Cuando se añada) ActiveCampaign IDs para newsletter inline
 
+### Cadence — páginas públicas
+
+- [ ] `cadence.privacy.controller` — "Pulsar Studio" o la entidad legal (decide Alex)
+- [ ] `cadence.privacy.email` — `hello@bypulsar.studio` hasta confirmar el buzón que atiende peticiones de privacidad
+- [ ] Texto del nivel gratuito de Gemini en `cadence.legal.ai.body.html` — cambia si Cadence pasa al nivel de pago
+- Al cambiar la política: subir `cadence.privacy.version` y `updated`. La app vuelve a pedir permiso solo si cambian los proveedores de IA.
+
 ### Datos de contacto pendientes
 
 En `src/config.ts → social`:
@@ -143,9 +155,16 @@ En `src/config.ts → social`:
 - [ ] Página `/projects` con portfolio real (cuando haya 3+ proyectos publicables)
 - [ ] Newsletter inline (ActiveCampaign + Cloudflare Turnstile)
 - [ ] Blog markdown (content collection + reading-time plugin)
-- [ ] Página `/legal` — solo si legalmente necesario
+- [x] Página legal — hecha para Cadence en `/cadence/legal`; una `/legal` del estudio solo si legalmente necesario
 - [ ] OG image dinámica
 - [ ] Custom cursor / parallax / video backgrounds (cuando haya assets)
+
+### Navegador interno (app de Cadence)
+
+- La app abre `/cadence/legal` y `/cadence` directamente: esas páginas pasan `intro={false}` (sin `IntroOverlay`, `intro-skip` desde el servidor).
+- `?lang=es|en|fr` fuerza el idioma (gana a `localStorage["pulsar.lang"]` y lo guarda): el navegador interno no comparte el idioma elegido en Safari/Chrome.
+- Header y footer apuntan a `/#services` etc. fuera de la home (`sectionHref` en `src/config.ts`).
+- Las anclas de la política (`#who`, `#data`, `#ai`, `#rights`…) son estables: la app puede enlazar a una sección.
 
 ---
 

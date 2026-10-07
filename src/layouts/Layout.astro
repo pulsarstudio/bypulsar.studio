@@ -13,18 +13,20 @@ const dictJson = JSON.stringify(dict);
 interface Props {
   title?: string;
   description?: string;
+  intro?: boolean;
 }
 
 const {
   title = `${brand.name} — ${brand.tagline}`,
   description = brand.description,
+  intro = true,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, brand.url).toString();
 ---
 
 <!doctype html>
-<html lang="es" class="bg-bg text-fg antialiased">
+<html lang={DEFAULT_LOCALE} class:list={["bg-bg text-fg antialiased", { "intro-skip": !intro }]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -56,23 +58,27 @@ const canonical = new URL(Astro.url.pathname, brand.url).toString();
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
     />
 
-    <script is:inline>
-      // Skip intro on subsequent pageloads in the same tab.
-      try {
-        if (sessionStorage.getItem("pulsar-intro-seen")) {
+    {intro && (
+      <script is:inline>
+        // Skip intro on subsequent pageloads in the same tab.
+        try {
+          if (sessionStorage.getItem("pulsar-intro-seen")) {
+            document.documentElement.classList.add("intro-skip");
+          } else {
+            sessionStorage.setItem("pulsar-intro-seen", "1");
+          }
+        } catch (_) {
           document.documentElement.classList.add("intro-skip");
-        } else {
-          sessionStorage.setItem("pulsar-intro-seen", "1");
         }
-      } catch (_) {
-        document.documentElement.classList.add("intro-skip");
-      }
-    </script>
+      </script>
+    )}
 
     {/* i18n runtime — reads localStorage, swaps every [data-i18n] /
         [data-i18n-html] / [data-i18n-attr-*] node when the language
         changes. SSR ships EN; if the saved locale is non-EN, the
-        applyLocale() call after DOMContentLoaded swaps text. Exposes
+        applyLocale() call after DOMContentLoaded swaps text. A ?lang=
+        query wins over the saved choice: the Cadence app opens its
+        pages in an in-app browser with no saved locale. Exposes
         window.__pulsarSetLocale(code) for the LanguageSwitcher. */}
     <script is:inline define:vars={{ dictJson, defaultLocale: DEFAULT_LOCALE }}>
       (function () {
@@ -80,6 +86,10 @@ const canonical = new URL(Astro.url.pathname, brand.url).toString();
         const KEY = "pulsar.lang";
 
         function getSaved() {
+          try {
+            const q = new URLSearchParams(location.search).get("lang");
+            if (q && DICT[q]) return q;
+          } catch (_) {}
           try {
             const v = localStorage.getItem(KEY);
             if (v && DICT[v]) return v;
@@ -131,7 +141,7 @@ const canonical = new URL(Astro.url.pathname, brand.url).toString();
   </head>
 
   <body class="bg-bg text-fg font-sans selection:bg-fg selection:text-bg">
-    <IntroOverlay />
+    {intro && <IntroOverlay />}
     <CursorGlow />
     <slot />
     <ConsentBanner />
