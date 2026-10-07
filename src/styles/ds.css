@@ -88,6 +88,50 @@
     @apply text-ink-muted;
   }
 
+  /* Long-form text (legal pages). Styles its children because the
+     markup comes from i18n strings, which can't carry classes. */
+  .ds-prose {
+    @apply max-w-2xl text-base md:text-lg leading-relaxed text-muted;
+  }
+
+  .ds-prose > * + * {
+    @apply mt-5;
+  }
+
+  .ds-prose strong {
+    @apply font-semibold text-fg;
+  }
+
+  .ds-prose a {
+    @apply text-fg underline decoration-1 underline-offset-4 transition-colors duration-200 hover:text-muted;
+    overflow-wrap: anywhere;
+  }
+
+  .ds-prose ul {
+    @apply space-y-3;
+  }
+
+  .ds-prose li {
+    @apply relative pl-6;
+  }
+
+  .ds-prose li::before {
+    content: "+";
+    @apply absolute left-0 text-fg/40;
+  }
+
+  .ds-prose dl {
+    @apply grid grid-cols-1 gap-x-8 gap-y-1 sm:grid-cols-[auto_1fr] sm:gap-y-3;
+  }
+
+  .ds-prose dt {
+    @apply font-mono text-xs uppercase tracking-[0.2em] sm:self-center;
+  }
+
+  .ds-prose dd {
+    @apply text-fg mb-3 sm:mb-0;
+  }
+
   /* ─── Buttons ──────────────────────────────────────────────── */
 
   .ds-btn {

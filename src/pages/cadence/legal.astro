@@ -1,0 +1,108 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { cadence } from "../../config";
+import { en } from "../../i18n/dict";
+
+const { controller, email, version, updated } = cadence.privacy;
+
+const sections = [
+  "who",
+  "scope",
+  "data",
+  "purposes",
+  "ai",
+  "providers",
+  "transfers",
+  "retention",
+  "rights",
+  "security",
+  "changes",
+] as const;
+
+const number = (i: number) => String(i + 1).padStart(2, "0");
+const key = (id: string, part: string) => `cadence.legal.${id}.${part}`;
+---
+
+<Layout title={`${en["cadence.privacy"]} — Cadence`} description={en["cadence.legal.lead"]} intro={false}>
+  <Header />
+  <main>
+    <section class="ds-section-card-wrap">
+      <div class="ds-ink-card">
+        <div class="ds-ink-card-inner">
+          <p class="ds-label mb-8" data-i18n="cadence.legal.eyebrow">{en["cadence.legal.eyebrow"]}</p>
+          <h1 class="ds-heading-section mb-6 break-words" data-i18n="cadence.legal.title">
+            {en["cadence.legal.title"]}
+          </h1>
+          <p class="ds-body max-w-2xl" data-i18n="cadence.legal.lead">{en["cadence.legal.lead"]}</p>
+          <p class="ds-label mt-10 flex flex-wrap gap-x-6 gap-y-2">
+            <span>
+              <span data-i18n="cadence.legal.version">{en["cadence.legal.version"]}</span> {version}
+            </span>
+            <span>
+              <span data-i18n="cadence.legal.updated">{en["cadence.legal.updated"]}</span>
+              <time datetime={updated}>{updated}</time>
+            </span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-section">
+      <div class="ds-section-inner grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)] lg:gap-16">
+        <nav aria-labelledby="legal-toc" class="lg:sticky lg:top-28 lg:self-start">
+          <p id="legal-toc" class="ds-label mb-5" data-i18n="cadence.legal.toc">{en["cadence.legal.toc"]}</p>
+          <ol class="grid grid-cols-2 gap-x-4 gap-y-3 lg:grid-cols-1">
+            {sections.map((id, i) => (
+              <li>
+                <a href={`#${id}`} class="ds-link flex gap-3 text-sm">
+                  <span class="pt-0.5 font-mono text-xs">{number(i)}</span>
+                  <span data-i18n={key(id, "title")}>{en[key(id, "title")]}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <article>
+          {sections.map((id, i) => (
+            <section id={id} class="scroll-mt-20 border-t border-line py-10 first:border-t-0 first:pt-0 md:py-14">
+              <p class="ds-label mb-4">{number(i)}</p>
+              <h2 class="ds-heading-sub mb-6" data-i18n={key(id, "title")}>{en[key(id, "title")]}</h2>
+              <div class="space-y-5">
+                <div class="ds-prose" data-i18n-html={key(id, "body.html")} set:html={en[key(id, "body.html")]} />
+
+                {id === "who" && (
+                  <div class="ds-prose">
+                    <dl>
+                      <dt data-i18n="cadence.legal.who.controller">{en["cadence.legal.who.controller"]}</dt>
+                      <dd>{controller}</dd>
+                      <dt data-i18n="cadence.legal.who.contact">{en["cadence.legal.who.contact"]}</dt>
+                      <dd><a href={`mailto:${email}`}>{email}</a></dd>
+                    </dl>
+                  </div>
+                )}
+
+                {id === "rights" && (
+                  <>
+                    <p class="ds-prose">
+                      <span data-i18n="cadence.legal.rights.write">{en["cadence.legal.rights.write"]}</span>{" "}
+                      <a href={`mailto:${email}`}>{email}</a>
+                    </p>
+                    <div
+                      class="ds-prose"
+                      data-i18n-html="cadence.legal.rights.complaint.html"
+                      set:html={en["cadence.legal.rights.complaint.html"]}
+                    />
+                  </>
+                )}
+              </div>
+            </section>
+          ))}
+        </article>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

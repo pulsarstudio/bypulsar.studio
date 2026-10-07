@@ -1,0 +1,54 @@
+<div class="cadence-visual" aria-hidden="true">
+  <div class="cadence-visual-inner">
+    <span class="cadence-visual-mark">C</span>
+    <span class="cadence-visual-frequency"></span>
+  </div>
+</div>
+
+<style>
+  .cadence-visual {
+    position: relative;
+    aspect-ratio: 1.1 / 1;
+    border-radius: clamp(16px, 2vw, 24px);
+    background:
+      radial-gradient(60% 60% at 50% 50%, rgba(80, 150, 255, 0.18), transparent 70%),
+      linear-gradient(135deg, #1a1a1a, #0a0a0a);
+    border: 1px solid rgba(245, 245, 245, 0.08);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .cadence-visual-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cadence-visual-mark {
+    font-family: "Inter", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(160px, 20vw, 280px);
+    letter-spacing: -0.06em;
+    color: rgba(245, 245, 245, 0.95);
+    line-height: 1;
+    text-transform: lowercase;
+  }
+
+  .cadence-visual-frequency {
+    position: absolute;
+    inset: 50% -50% auto auto;
+    width: 200%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(80, 150, 255, 0.3) 40%,
+      rgba(80, 150, 255, 0.6) 50%,
+      rgba(80, 150, 255, 0.3) 60%,
+      transparent 100%
+    );
+    transform: translateY(-50%);
+  }
+</style>

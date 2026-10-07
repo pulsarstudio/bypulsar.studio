@@ -1,6 +1,8 @@
 ---
-import { brand, nav, social } from "../config";
+import { brand, nav, sectionHref, social } from "../config";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+
+const { pathname } = Astro.url;
 ---
 
 <header class="header" data-reveal style="--reveal-delay: 0.1s">
@@ -12,7 +14,7 @@ import LanguageSwitcher from "./LanguageSwitcher.astro";
 
       <nav class="header-nav" aria-label="Sections">
         {nav.map((item) => (
-          <a href={item.href} class="header-nav-link" data-i18n={item.i18nKey}>
+          <a href={sectionHref(item.href, pathname)} class="header-nav-link" data-i18n={item.i18nKey}>
             {item.label}
           </a>
         ))}
@@ -58,7 +60,7 @@ import LanguageSwitcher from "./LanguageSwitcher.astro";
       <li><a href="/" data-nav-close data-i18n="nav.home">Home</a></li>
       {nav.map((item) => (
         <li>
-          <a href={item.href} data-nav-close data-i18n={item.i18nKey}>
+          <a href={sectionHref(item.href, pathname)} data-nav-close data-i18n={item.i18nKey}>
             {item.label}
           </a>
         </li>

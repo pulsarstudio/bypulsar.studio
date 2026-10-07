@@ -1,0 +1,89 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import CadenceMark from "../../components/CadenceMark.astro";
+import { brand, cadence, social } from "../../config";
+import { en } from "../../i18n/dict";
+
+const features = [0, 1, 2, 3, 4].map((i) => `cadence.feature.${i}`);
+const steps = [0, 1, 2].map((i) => `cadence.page.how.${i}`);
+const number = (i: number) => String(i + 1).padStart(2, "0");
+---
+
+<Layout title={`Cadence — ${brand.name}`} description={en["cadence.lead"]} intro={false}>
+  <Header />
+  <main>
+    <section class="ds-section-card-wrap">
+      <div class="ds-ink-card">
+        <div class="ds-ink-card-inner grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <p class="ds-label mb-8" data-i18n="cadence.eyebrow">{en["cadence.eyebrow"]}</p>
+            <h1 class="ds-heading-section mb-6">cadence.</h1>
+            <p class="ds-body mb-8 max-w-xl" data-i18n="cadence.lead">{en["cadence.lead"]}</p>
+            <ul class="mb-10 flex flex-wrap gap-2">
+              {features.map((key) => (
+                <li class="ds-pill" data-i18n={key}>{en[key]}</li>
+              ))}
+            </ul>
+            <p class="ds-prose text-sm md:text-base">
+              <span data-i18n="cadence.page.services">{en["cadence.page.services"]}</span>{" "}
+              <a href="/#services" data-i18n="cadence.page.services.link">{en["cadence.page.services.link"]}</a>
+            </p>
+          </div>
+
+          <CadenceMark />
+        </div>
+      </div>
+    </section>
+
+    <section class="ds-section">
+      <div class="ds-section-inner">
+        <h2 class="ds-heading-section mb-12 md:mb-20" data-i18n="cadence.page.how.title">
+          {en["cadence.page.how.title"]}
+        </h2>
+        <ol class="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
+          {steps.map((step, i) => (
+            <li class="border-t border-line pt-6">
+              <p class="ds-label mb-6">{number(i)}</p>
+              <h3 class="ds-heading-sub mb-3" data-i18n={`${step}.title`}>{en[`${step}.title`]}</h3>
+              <p class="ds-body" data-i18n={`${step}.body`}>{en[`${step}.body`]}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="ds-section">
+      <div class="ds-section-inner grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <h2 class="ds-heading-section mb-8" data-i18n="cadence.page.support.title">
+            {en["cadence.page.support.title"]}
+          </h2>
+          <p class="ds-body mb-6 max-w-md" data-i18n="cadence.page.support.body">
+            {en["cadence.page.support.body"]}
+          </p>
+          <a
+            href={`mailto:${social.email}`}
+            class="ds-heading-sub break-all underline decoration-[1.5px] underline-offset-[6px] transition-colors duration-200 hover:text-muted"
+          >
+            {social.email}
+          </a>
+        </div>
+
+        <a href={cadence.legal} class="ds-card-dark block self-end hover:border-fg/30">
+          <p class="ds-label mb-6">
+            <span data-i18n="cadence.legal.version">{en["cadence.legal.version"]}</span>
+            {cadence.privacy.version} · <time datetime={cadence.privacy.updated}>{cadence.privacy.updated}</time>
+          </p>
+          <h3 class="ds-heading-sub mb-3 flex items-baseline justify-between gap-4">
+            <span data-i18n="cadence.privacy">{en["cadence.privacy"]}</span>
+            <span aria-hidden="true">→</span>
+          </h3>
+          <p class="ds-body" data-i18n="cadence.page.privacy.body">{en["cadence.page.privacy.body"]}</p>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

@@ -155,8 +155,20 @@ export const social = {
   calendly: "https://calendly.com/inercia/30min",
 } as const;
 
+// The Cadence app opens `legal` in an in-app browser (AI-consent screen and
+// Preferences), and both stores list `page` and `legal` as support and
+// privacy URLs: keep both paths stable.
 export const cadence = {
-  url: "https://cadence.club",
+  page: "/cadence",
+  legal: "/cadence/legal",
+  privacy: {
+    // TODO: Alex decides whether the controller is "Pulsar Studio" or the
+    // legal entity, and which address answers privacy requests.
+    controller: "Pulsar Studio",
+    email: "hello@bypulsar.studio",
+    version: "1.0",
+    updated: "2026-10-07",
+  },
 } as const;
 
 export const nav = [
@@ -166,6 +178,9 @@ export const nav = [
   { label: "Team", href: "#team", i18nKey: "nav.team" },
   { label: "Contact", href: "#contact", i18nKey: "nav.contact" },
 ] as const;
+
+export const sectionHref = (href: string, pathname: string) =>
+  pathname === "/" ? href : `/${href}`;
 
 // Hero is now a clean dark surface with a moving blue cloud (Halo-style).
 // No photo for now — the cloud carries the visual weight.
