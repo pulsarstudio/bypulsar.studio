@@ -146,7 +146,7 @@ Construcción favorita para hablar del estudio sin separar al equipo:
 | Página | Title | Secciones |
 |---|---|---|
 | `/cadence` | `cadence.` (eyebrow "our SaaS", lead del home) | `how it works.` (By chat · Phone and web · By invitation) · `support.` |
-| `/cadence/legal` | `privacy.` | `who we are.` · `who uses cadence.` · `what we collect.` · `why we use it.` · `ai providers.` · `other providers.` · `transfers.` · `how long we keep it.` · `your rights.` · `security.` · `changes.` |
+| `/cadence/legal` | `privacy.` | `who we are.` · `who uses cadence.` · `what we collect.` · `why we use it.` · `ai providers.` · `other providers.` · `crash reports.` · `transfers.` · `how long we keep it.` · `your rights.` · `security.` · `changes.` |
 
 La política se escribe en lenguaje llano, frases cortas, sin afirmaciones legales más allá de los artículos del RGPD citados. "Cadence on the web" en vez de "web admin" (el copy promete "no panels").
 
