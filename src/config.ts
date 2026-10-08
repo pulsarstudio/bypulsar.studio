@@ -166,8 +166,8 @@ export const cadence = {
     // legal entity, and which address answers privacy requests.
     controller: "Pulsar Studio",
     email: "hello@bypulsar.studio",
-    version: "1.0",
-    updated: "2026-10-07",
+    version: "1.1",
+    updated: "2026-10-08",
   },
 } as const;
 
