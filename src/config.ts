@@ -131,6 +131,13 @@ export const social = {
 export const cadence = {
   page: "/cadence",
   legal: "/cadence/legal",
+  // Where this site reads its own projects (the Work section): the studio is a
+  // club of Cadence. Public, like the API itself; the read key is a secret
+  // (CADENCE_READ_KEY) and never lives here.
+  api: {
+    url: "https://api-cxq2p64maq-no.a.run.app",
+    org: "bypulsarstudio",
+  },
   privacy: {
     // TODO: Alex decides whether the controller is "Pulsar Studio" or the
     // legal entity, and which address answers privacy requests.

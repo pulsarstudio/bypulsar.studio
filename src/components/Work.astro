@@ -1,6 +1,11 @@
 ---
 import { en } from "../i18n/dict";
-import { featuredProjects, workProjects } from "../data/work";
+import { readProjects } from "../lib/cadence/client";
+import { aboutInEnglish, aboutOf, homeProjects } from "../lib/work";
+
+const read = await readProjects();
+const projects = read.state === "ok" ? read.data : [];
+const shown = homeProjects(projects);
 ---
 
 <section id="work" class="ds-section">
@@ -9,38 +14,50 @@ import { featuredProjects, workProjects } from "../data/work";
       <p class="ds-label" data-i18n="work.eyebrow">Selected work</p>
       <h2 class="ds-heading-section work-title">
         <span data-i18n="work.title">work.</span>
-        <sup class="work-count">({workProjects.length})</sup>
+        {projects.length > 0 && <sup class="work-count">({projects.length})</sup>}
       </h2>
     </header>
 
-    <ol class="work-list">
-      {featuredProjects.map((project) => (
-        <li>
-          <a href={`/work/${project.slug}`} class="work-row work-row-link">
-            <span class:list={["work-name", { "work-name-long": project.name.length > 14 }]}>{project.name.toLowerCase()}</span>
+    {shown.length === 0 && (
+      <p class="ds-body" data-i18n={read.state === "unavailable" ? "work.ui.unavailable" : "work.ui.empty"}>
+        {read.state === "unavailable" ? en["work.ui.unavailable"] : en["work.ui.empty"]}
+      </p>
+    )}
 
-            <div class="work-meta">
-              <p class="ds-label">{project.client} · {project.year}</p>
-              <ul class="work-cats">
-                {project.tags.map((tag) => (
-                  <li class="ds-pill">{tag}</li>
-                ))}
-              </ul>
-              <p class="ds-body work-lead" data-localized={JSON.stringify(project.about)}>
-                {project.about.en}
-              </p>
-            </div>
+    {shown.length > 0 && (
+      <ol class="work-list">
+        {shown.map((project) => (
+          <li>
+            <a href={`/work/${project.slug}`} class="work-row work-row-link">
+              <span class:list={["work-name", { "work-name-long": project.name.length > 14 }]}>{project.name.toLowerCase()}</span>
 
-            <span class="work-arrow" aria-hidden="true">→</span>
-          </a>
-        </li>
-      ))}
-    </ol>
+              <div class="work-meta">
+                <p class="ds-label">{project.client} · {project.year}</p>
+                {project.tags.length > 0 && (
+                  <ul class="work-cats">
+                    {project.tags.map((tag) => (
+                      <li class="ds-pill">{tag}</li>
+                    ))}
+                  </ul>
+                )}
+                <p class="ds-body work-lead" data-localized={JSON.stringify(aboutOf(project))}>
+                  {aboutInEnglish(project)}
+                </p>
+              </div>
 
-    <a href="/work" class="ds-btn-primary-dark mt-12 md:mt-16">
-      <span data-i18n="work.ui.all">{en["work.ui.all"]}</span>
-      <span aria-hidden="true">→</span>
-    </a>
+              <span class="work-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    )}
+
+    {projects.length > 0 && (
+      <a href="/work" class="ds-btn-primary-dark mt-12 md:mt-16">
+        <span data-i18n="work.ui.all">{en["work.ui.all"]}</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    )}
   </div>
 </section>
 

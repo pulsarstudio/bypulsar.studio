@@ -126,10 +126,12 @@ Esta sección lista todo lo que está como TODO. Cuando se reemplace por valor r
 - [ ] Microsoft Clarity project ID en `src/config.ts → tracking.clarityId`
 - [ ] (Cuando se añada) ActiveCampaign IDs para newsletter inline
 
-### Work — proyectos de muestra
+### Work — los proyectos vienen de Cadence
 
-- [ ] `src/data/work.ts` son DATOS DE MUESTRA con la forma de `PublicProject` de Cadence (pieza `work`): Pattone y Pexter reales, el resto inventados (`sample: true`) y todas las imágenes como hueco (`src: null`). Sustituir por la lectura de `GET /v1/public/orgs/bypulsarstudio/work` (read key de Pulsar) cuando `work-api` esté en producción; no fusionar en `main` antes.
-- [ ] `/work` y `/work/<slug>` cambian de idioma con `?lang=` como el resto; el `about` de cada proyecto llega por idioma desde Cadence (`data-localized`), no del diccionario.
+- [ ] Secret `CADENCE_READ_KEY` en GitHub (la read key del club `bypulsarstudio`): sin él el deploy falla a propósito, para no publicar la sección vacía.
+- `/work`, `/work/<slug>` y la sección `work.` de la portada leen `GET /v1/public/orgs/bypulsarstudio/work[/<slug>]` en cada petición (`src/lib/cadence/client.ts`, con 60 s de memoria). Solo lectura; sin contenido de reserva: si Cadence no responde, la página lo dice (y `/work` contesta 503). La URL de la API y el club están en `src/config.ts → cadence.api`; `CADENCE_API_URL` / `CADENCE_ORG` los sobrescriben (pruebas en local).
+- Los tipos de `src/lib/cadence/types.ts` son espejo a mano de `packages/db/src/work.ts` de Cadence.
+- El `about` de cada proyecto llega por idioma (`data-localized`), no del diccionario; cae al inglés si falta.
 
 ### Cadence — páginas públicas
 

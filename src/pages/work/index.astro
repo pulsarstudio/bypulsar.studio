@@ -5,7 +5,13 @@ import Footer from "../../components/Footer.astro";
 import WorkMedia from "../../components/WorkMedia.astro";
 import { brand } from "../../config";
 import { en } from "../../i18n/dict";
-import { tagKey, workProjects, workTags } from "../../data/work";
+import { readProjects } from "../../lib/cadence/client";
+import { tagKey, tagsOf } from "../../lib/work";
+
+const read = await readProjects();
+const projects = read.state === "ok" ? read.data : [];
+const tags = tagsOf(projects);
+if (read.state === "unavailable") Astro.response.status = 503;
 ---
 
 <Layout title={`Work — ${brand.name}`} description={en["work.ui.page.lead"]} intro={false}>
@@ -16,42 +22,53 @@ import { tagKey, workProjects, workTags } from "../../data/work";
         <header class="mb-12 flex flex-col gap-6 md:mb-16">
           <h1 class="ds-heading-section work-index-title">
             <span data-i18n="work.title">{en["work.title"]}</span>
-            <sup class="work-index-count" data-work-count>({workProjects.length})</sup>
+            {projects.length > 0 && <sup class="work-index-count" data-work-count>({projects.length})</sup>}
           </h1>
           <p class="ds-body max-w-xl" data-i18n="work.ui.page.lead">{en["work.ui.page.lead"]}</p>
         </header>
 
-        <ul class="mb-12 flex flex-wrap gap-2 md:mb-16" aria-label={en["work.ui.filter"]} data-i18n-attr-aria-label="work.ui.filter">
-          <li>
-            <button type="button" class="ds-pill" data-work-filter="" aria-pressed="true" data-i18n="work.ui.filter.all">
-              {en["work.ui.filter.all"]}
-            </button>
-          </li>
-          {workTags.map((tag) => (
+        {read.state === "unavailable" && (
+          <p class="ds-body" data-i18n="work.ui.unavailable">{en["work.ui.unavailable"]}</p>
+        )}
+        {read.state === "ok" && projects.length === 0 && (
+          <p class="ds-body" data-i18n="work.ui.empty">{en["work.ui.empty"]}</p>
+        )}
+
+        {tags.length > 1 && (
+          <ul class="mb-12 flex flex-wrap gap-2 md:mb-16" aria-label={en["work.ui.filter"]} data-i18n-attr-aria-label="work.ui.filter">
             <li>
-              <button type="button" class="ds-pill-outline" data-work-filter={tagKey(tag)} aria-pressed="false">
-                {tag}
+              <button type="button" class="ds-pill" data-work-filter="" aria-pressed="true" data-i18n="work.ui.filter.all">
+                {en["work.ui.filter.all"]}
               </button>
             </li>
-          ))}
-        </ul>
+            {tags.map((tag) => (
+              <li>
+                <button type="button" class="ds-pill-outline" data-work-filter={tagKey(tag)} aria-pressed="false">
+                  {tag}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <ul class="work-grid">
-          {workProjects.map((project, i) => (
+          {projects.map((project, i) => (
             <li data-work-item data-tags={project.tags.map(tagKey).join(" ")}>
               <a href={`/work/${project.slug}`} class="work-card">
-                <WorkMedia media={project.cover} seed={i} eager={i < 2} />
+                <WorkMedia
+                  src={project.cover?.w800 ?? null}
+                  alt={project.cover?.alt ?? project.name}
+                  ratio={4 / 3}
+                  eager={i < 2}
+                />
                 <div class="work-card-text">
                   <div>
                     <h2 class="ds-heading-sub lowercase">{project.name}</h2>
-                    <p class="ds-label mt-3">
-                      {project.client} · {project.year}
-                      {project.sample && <span> · <span data-i18n="work.ui.sample">{en["work.ui.sample"]}</span></span>}
-                    </p>
+                    <p class="ds-label mt-3">{project.client} · {project.year}</p>
                   </div>
                   <span class="work-card-arrow" aria-hidden="true">→</span>
                 </div>
-                <p class="work-card-tags">{project.tags.join(" · ")}</p>
+                {project.tags.length > 0 && <p class="work-card-tags">{project.tags.join(" · ")}</p>}
               </a>
             </li>
           ))}

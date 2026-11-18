@@ -79,7 +79,8 @@ src/
   pages/index.astro       compone secciones
   pages/cadence/          /cadence y /cadence/legal (privacidad de la app de Cadence)
   pages/work/             /work (rejilla con filtros por disciplina) y /work/<slug> (ficha del proyecto)
-  data/work.ts            proyectos de MUESTRA con la forma de Cadence, hasta que la web lea su API
+  lib/cadence/            lectura (solo lectura) de los proyectos del estudio en Cadence: client.ts + types.ts
+  lib/work.ts             lo que pintan las páginas de Work a partir de esos proyectos
   config.ts               brand/team/services/social — si cambia copy, cambia aquí
 
 ARCHITECTURE.md  arquitectura técnica + estable vs temporal

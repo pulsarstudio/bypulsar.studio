@@ -1,23 +1,27 @@
 ---
-import type { WorkMedia } from "../data/work";
-
 interface Props {
-  media: WorkMedia;
-  /** Varies the placeholder so neighbours do not look identical. */
-  seed?: number;
+  /** Image URL; null draws the empty frame (a project with no cover yet). */
+  src: string | null;
+  alt: string;
+  /** width / height of the frame; omit to follow the image's own shape. */
+  ratio?: number;
   eager?: boolean;
+  /** A gallery video: the image is its poster. */
+  video?: { src: string; type: string };
 }
 
-const { media, seed = 0, eager = false } = Astro.props;
-const angle = 115 + ((seed * 47) % 130);
+const { src, alt, ratio, eager = false, video } = Astro.props;
+const style = ratio ? `aspect-ratio: ${ratio};` : undefined;
 ---
 
-<div class="ds-media" style={`aspect-ratio: ${media.ratio}; --media-angle: ${angle}deg;`}>
-  {media.src ? (
-    <img src={media.src} alt={media.alt} loading={eager ? "eager" : "lazy"} decoding="async" />
+<div class:list={["ds-media", { "ds-media-framed": ratio }]} style={style}>
+  {video ? (
+    <video controls playsinline preload="none" poster={src ?? undefined} aria-label={alt}>
+      <source src={video.src} type={video.type} />
+    </video>
+  ) : src ? (
+    <img src={src} alt={alt} loading={eager ? "eager" : "lazy"} decoding="async" />
   ) : (
-    <span class="ds-media-placeholder" role="img" aria-label={media.alt}>
-      <span class="ds-label">{media.alt}</span>
-    </span>
+    <span class="ds-media-placeholder" role="img" aria-label={alt}></span>
   )}
 </div>
