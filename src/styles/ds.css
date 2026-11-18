@@ -292,3 +292,34 @@
     @apply inline-flex items-center rounded-full bg-white px-4 py-2 text-[13px] font-medium leading-none text-bg;
   }
 }
+
+@layer components {
+  /* ─── Work ─────────────────────────────────────────────────── */
+
+  /* Filter pill, not selected — the outline twin of ds-pill. */
+  .ds-pill-outline {
+    @apply inline-flex items-center rounded-full border border-fg/20 px-4 py-2 text-[13px] font-medium leading-none text-fg transition-colors duration-200 hover:border-fg/60;
+  }
+
+  /* A project's cover or gallery item: rounded frame, image fills it. */
+  .ds-media {
+    @apply relative w-full overflow-hidden rounded-3xl border border-line bg-card;
+  }
+
+  .ds-media img {
+    @apply h-full w-full object-cover;
+  }
+
+  /* Stand-in while a project has no image yet. */
+  .ds-media-placeholder {
+    @apply absolute inset-0 flex items-end p-6;
+    background-image:
+      radial-gradient(120% 90% at 20% 0%, rgba(255, 255, 255, 0.09), transparent 60%),
+      linear-gradient(var(--media-angle, 135deg), #1c1c1c, #0c0c0c 70%);
+  }
+
+  /* Label / value pair of a project's sheet. */
+  .ds-meta-value {
+    @apply mt-2 text-lg leading-snug text-fg md:text-xl;
+  }
+}

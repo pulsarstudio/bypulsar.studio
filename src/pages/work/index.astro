@@ -1,0 +1,178 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import WorkMedia from "../../components/WorkMedia.astro";
+import { brand } from "../../config";
+import { en } from "../../i18n/dict";
+import { tagKey, workProjects, workTags } from "../../data/work";
+---
+
+<Layout title={`Work — ${brand.name}`} description={en["work.ui.page.lead"]} intro={false}>
+  <Header />
+  <main>
+    <section class="ds-section">
+      <div class="ds-section-inner">
+        <header class="mb-12 flex flex-col gap-6 md:mb-16">
+          <h1 class="ds-heading-section work-index-title">
+            <span data-i18n="work.title">{en["work.title"]}</span>
+            <sup class="work-index-count" data-work-count>({workProjects.length})</sup>
+          </h1>
+          <p class="ds-body max-w-xl" data-i18n="work.ui.page.lead">{en["work.ui.page.lead"]}</p>
+        </header>
+
+        <ul class="mb-12 flex flex-wrap gap-2 md:mb-16" aria-label={en["work.ui.filter"]} data-i18n-attr-aria-label="work.ui.filter">
+          <li>
+            <button type="button" class="ds-pill" data-work-filter="" aria-pressed="true" data-i18n="work.ui.filter.all">
+              {en["work.ui.filter.all"]}
+            </button>
+          </li>
+          {workTags.map((tag) => (
+            <li>
+              <button type="button" class="ds-pill-outline" data-work-filter={tagKey(tag)} aria-pressed="false">
+                {tag}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <ul class="work-grid">
+          {workProjects.map((project, i) => (
+            <li data-work-item data-tags={project.tags.map(tagKey).join(" ")}>
+              <a href={`/work/${project.slug}`} class="work-card">
+                <WorkMedia media={project.cover} seed={i} eager={i < 2} />
+                <div class="work-card-text">
+                  <div>
+                    <h2 class="ds-heading-sub lowercase">{project.name}</h2>
+                    <p class="ds-label mt-3">
+                      {project.client} · {project.year}
+                      {project.sample && <span> · <span data-i18n="work.ui.sample">{en["work.ui.sample"]}</span></span>}
+                    </p>
+                  </div>
+                  <span class="work-card-arrow" aria-hidden="true">→</span>
+                </div>
+                <p class="work-card-tags">{project.tags.join(" · ")}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-work-filter]"));
+  const items = Array.from(document.querySelectorAll<HTMLElement>("[data-work-item]"));
+  const count = document.querySelector<HTMLElement>("[data-work-count]");
+
+  function show(tag: string) {
+    let shown = 0;
+    for (const item of items) {
+      const match = !tag || (item.dataset.tags ?? "").split(" ").includes(tag);
+      item.hidden = !match;
+      if (match) shown += 1;
+    }
+    for (const button of buttons) {
+      const active = (button.dataset.workFilter ?? "") === tag;
+      button.setAttribute("aria-pressed", String(active));
+      button.classList.toggle("ds-pill", active);
+      button.classList.toggle("ds-pill-outline", !active);
+    }
+    if (count) count.textContent = `(${shown})`;
+  }
+
+  for (const button of buttons) {
+    button.addEventListener("click", () => {
+      const tag = button.dataset.workFilter ?? "";
+      show(tag);
+      const url = new URL(location.href);
+      if (tag) url.searchParams.set("tag", tag);
+      else url.searchParams.delete("tag");
+      history.replaceState(null, "", url);
+    });
+  }
+
+  const initial = new URLSearchParams(location.search).get("tag") ?? "";
+  if (initial && buttons.some((button) => button.dataset.workFilter === initial)) show(initial);
+</script>
+
+<style>
+  .work-index-title {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin: 0;
+  }
+
+  .work-index-count {
+    font-size: 0.32em;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-top: 0.4em;
+    @apply text-muted;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .work-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .work-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .work-card-text {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .work-card-arrow {
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.1;
+    transition: transform 0.3s ease;
+    @apply text-fg;
+  }
+
+  .work-card-tags {
+    margin: 0.75rem 0 0;
+    @apply text-sm text-muted;
+  }
+
+  .work-card :global(.ds-media) {
+    transition: border-color 0.3s ease;
+  }
+
+  .work-card:hover :global(.ds-media),
+  .work-card:focus-visible :global(.ds-media) {
+    @apply border-fg/30;
+  }
+
+  .work-card:hover .work-card-arrow,
+  .work-card:focus-visible .work-card-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .work-card-arrow,
+    .work-card :global(.ds-media) {
+      transition: none;
+    }
+  }
+</style>

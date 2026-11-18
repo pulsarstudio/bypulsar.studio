@@ -78,6 +78,8 @@ src/
   layouts/Layout.astro    SEO, fonts, Lenis, IntroOverlay, ConsentBanner
   pages/index.astro       compone secciones
   pages/cadence/          /cadence y /cadence/legal (privacidad de la app de Cadence)
+  pages/work/             /work (rejilla con filtros por disciplina) y /work/<slug> (ficha del proyecto)
+  data/work.ts            proyectos de MUESTRA con la forma de Cadence, hasta que la web lea su API
   config.ts               brand/team/services/social — si cambia copy, cambia aquí
 
 ARCHITECTURE.md  arquitectura técnica + estable vs temporal

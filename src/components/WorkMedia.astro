@@ -1,0 +1,23 @@
+---
+import type { WorkMedia } from "../data/work";
+
+interface Props {
+  media: WorkMedia;
+  /** Varies the placeholder so neighbours do not look identical. */
+  seed?: number;
+  eager?: boolean;
+}
+
+const { media, seed = 0, eager = false } = Astro.props;
+const angle = 115 + ((seed * 47) % 130);
+---
+
+<div class="ds-media" style={`aspect-ratio: ${media.ratio}; --media-angle: ${angle}deg;`}>
+  {media.src ? (
+    <img src={media.src} alt={media.alt} loading={eager ? "eager" : "lazy"} decoding="async" />
+  ) : (
+    <span class="ds-media-placeholder" role="img" aria-label={media.alt}>
+      <span class="ds-label">{media.alt}</span>
+    </span>
+  )}
+</div>
