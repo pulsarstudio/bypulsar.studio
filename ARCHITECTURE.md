@@ -126,6 +126,11 @@ Esta sección lista todo lo que está como TODO. Cuando se reemplace por valor r
 - [ ] Microsoft Clarity project ID en `src/config.ts → tracking.clarityId`
 - [ ] (Cuando se añada) ActiveCampaign IDs para newsletter inline
 
+### Work — proyectos de muestra
+
+- [ ] `src/data/work.ts` son DATOS DE MUESTRA con la forma de `PublicProject` de Cadence (pieza `work`): Pattone y Pexter reales, el resto inventados (`sample: true`) y todas las imágenes como hueco (`src: null`). Sustituir por la lectura de `GET /v1/public/orgs/bypulsarstudio/work` (read key de Pulsar) cuando `work-api` esté en producción; no fusionar en `main` antes.
+- [ ] `/work` y `/work/<slug>` cambian de idioma con `?lang=` como el resto; el `about` de cada proyecto llega por idioma desde Cadence (`data-localized`), no del diccionario.
+
 ### Cadence — páginas públicas
 
 - [ ] `cadence.privacy.controller` — "Pulsar Studio" o la entidad legal (decide Alex)
