@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { brand } from "../config";
+import { en } from "../i18n/dict";
+---
+
+<Layout title={`Not found — ${brand.name}`} intro={false}>
+  <Header />
+  <main>
+    <section class="ds-section">
+      <div class="ds-section-inner">
+        <p class="ds-label mb-6">404</p>
+        <h1 class="ds-heading-section mb-10" data-i18n="notfound.title">{en["notfound.title"]}</h1>
+        <a href="/" class="ds-btn-primary-dark">
+          <span data-i18n="notfound.home">{en["notfound.home"]}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

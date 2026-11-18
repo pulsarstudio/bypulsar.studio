@@ -5,17 +5,24 @@ import Footer from "../../components/Footer.astro";
 import WorkMedia from "../../components/WorkMedia.astro";
 import { brand } from "../../config";
 import { en } from "../../i18n/dict";
-import { tagKey, workProjects } from "../../data/work";
+import { readProject, readProjects } from "../../lib/cadence/client";
+import { aboutInEnglish, aboutOf, galleryAlt, tagKey, variant } from "../../lib/work";
 
-const { slug } = Astro.params;
-const index = workProjects.findIndex((project) => project.slug === slug);
-if (index === -1) return new Response(null, { status: 404 });
+const slug = Astro.params.slug ?? "";
+// Cadence shows a project's id as `project-<slug>`: an address copied from there still lands.
+if (slug.startsWith("project-")) return Astro.redirect(`/work/${slug.slice("project-".length)}`, 301);
 
-const project = workProjects[index];
-const next = workProjects[(index + 1) % workProjects.length];
+const [read, list] = await Promise.all([readProject(slug), readProjects()]);
+if (read.state === "missing") return Astro.rewrite("/404");
+if (read.state === "unavailable") return Astro.redirect("/work", 302);
+
+const project = read.data;
+const others = list.state === "ok" ? list.data : [];
+const index = others.findIndex((other) => other.slug === project.slug);
+const next = others.length > 1 ? others[(index + 1) % others.length] : null;
 ---
 
-<Layout title={`${project.name} — ${brand.name}`} description={project.about.en} intro={false}>
+<Layout title={`${project.name} — ${brand.name}`} description={aboutInEnglish(project)} intro={false}>
   <Header />
   <main>
     <section class="ds-section">
@@ -27,7 +34,7 @@ const next = workProjects[(index + 1) % workProjects.length];
 
         <h1 class="ds-heading-section mb-10 lowercase md:mb-14">{project.name}</h1>
 
-        <WorkMedia media={project.cover} seed={index} eager />
+        {project.cover && <WorkMedia src={project.cover.w1600} alt={project.cover.alt ?? project.name} eager />}
 
         <dl class="project-sheet">
           <div class="project-sheet-block">
@@ -42,14 +49,16 @@ const next = workProjects[(index + 1) % workProjects.length];
           </div>
 
           <div class="project-sheet-block">
-            <div>
-              <dt class="ds-label" data-i18n="work.ui.tags">{en["work.ui.tags"]}</dt>
-              <dd class="mt-3 flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <a href={`/work?tag=${tagKey(tag)}`} class="ds-pill-outline">{tag}</a>
-                ))}
-              </dd>
-            </div>
+            {project.tags.length > 0 && (
+              <div>
+                <dt class="ds-label" data-i18n="work.ui.tags">{en["work.ui.tags"]}</dt>
+                <dd class="mt-3 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <a href={`/work?tag=${tagKey(tag)}`} class="ds-pill-outline">{tag}</a>
+                  ))}
+                </dd>
+              </div>
+            )}
             <div>
               <dt class="ds-label" data-i18n="work.ui.year">{en["work.ui.year"]}</dt>
               <dd class="ds-meta-value">{project.year}</dd>
@@ -59,7 +68,7 @@ const next = workProjects[(index + 1) % workProjects.length];
           <div class="project-sheet-block">
             <div>
               <dt class="ds-label" data-i18n="work.ui.about">{en["work.ui.about"]}</dt>
-              <dd class="ds-meta-value" data-localized={JSON.stringify(project.about)}>{project.about.en}</dd>
+              <dd class="ds-meta-value" data-localized={JSON.stringify(aboutOf(project))}>{aboutInEnglish(project)}</dd>
             </div>
             {project.url && (
               <div>
@@ -72,13 +81,23 @@ const next = workProjects[(index + 1) % workProjects.length];
           </div>
         </dl>
 
-        <ul class="project-gallery">
-          {project.gallery.map((media, i) => (
-            <li class:list={{ "project-gallery-wide": media.ratio > 1.4 }}>
-              <WorkMedia media={media} seed={index + i + 1} />
-            </li>
-          ))}
-        </ul>
+        {project.gallery.length > 0 && (
+          <ul class="project-gallery">
+            {project.gallery.map((entry) => (
+              <li>
+                {entry.kind === "video" ? (
+                  <WorkMedia
+                    src={variant(entry.url, 1600)}
+                    alt={galleryAlt(entry, project.name)}
+                    video={{ src: entry.videoUrl, type: entry.videoType }}
+                  />
+                ) : (
+                  <WorkMedia src={variant(entry.url, 1600)} alt={galleryAlt(entry, project.name)} />
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
 
         {project.copyright && (
           <div class="mt-16 max-w-3xl md:mt-24">
@@ -89,15 +108,17 @@ const next = workProjects[(index + 1) % workProjects.length];
       </div>
     </section>
 
-    <section class="ds-section">
-      <a href={`/work/${next.slug}`} class="project-next ds-section-inner">
-        <p class="ds-label" data-i18n="work.ui.next">{en["work.ui.next"]}</p>
-        <p class="project-next-name">
-          <span>{next.name.toLowerCase()}</span>
-          <span class="project-next-arrow" aria-hidden="true">→</span>
-        </p>
-      </a>
-    </section>
+    {next && next.slug !== project.slug && (
+      <section class="ds-section">
+        <a href={`/work/${next.slug}`} class="project-next ds-section-inner">
+          <p class="ds-label" data-i18n="work.ui.next">{en["work.ui.next"]}</p>
+          <p class="project-next-name">
+            <span>{next.name.toLowerCase()}</span>
+            <span class="project-next-arrow" aria-hidden="true">→</span>
+          </p>
+        </a>
+      </section>
+    )}
   </main>
   <Footer />
 </Layout>
@@ -162,23 +183,22 @@ const next = workProjects[(index + 1) % workProjects.length];
     @apply text-muted;
   }
 
+  /* Each photo keeps its own shape: two columns that fill top to bottom. */
   .project-gallery {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(1rem, 2vw, 1.5rem);
     list-style: none;
     padding: 0;
     margin: 0;
+    column-gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .project-gallery > li {
+    break-inside: avoid;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
   }
 
   @media (min-width: 768px) {
     .project-gallery {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      align-items: start;
-    }
-
-    .project-gallery-wide {
-      grid-column: 1 / -1;
+      column-count: 2;
     }
   }
 

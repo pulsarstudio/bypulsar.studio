@@ -158,7 +158,7 @@ Definidas en `tailwind.config.mjs`, `src/styles/globals.css`, `IntroOverlay.astr
 | `ds-pill` | Tag pill blanca sobre dark (categorías de servicios, tags de proyectos) |
 | `ds-pill-outline` | Gemela con borde de `ds-pill`: un filtro de `/work` sin seleccionar y las etiquetas de la ficha de un proyecto |
 | `ds-meta-value` | El valor bajo un `ds-label` en la ficha de un proyecto (Project, Client, Year, About) |
-| `ds-media` + `ds-media-placeholder` | Marco redondeado de una portada o una imagen de galería; el placeholder es el hueco mientras el proyecto no tiene imagen |
+| `ds-media` (+ `ds-media-framed`, `ds-media-placeholder`) | Marco redondeado de una portada o de una foto o vídeo de galería. Con `ds-media-framed` (una forma fija: la portada de una tarjeta) la imagen lo llena; sin él, el marco sigue la forma de la imagen. El placeholder es el marco vacío de un proyecto sin portada |
 | `ds-legal-entity` + `ds-legal-sep` | Línea de copyright: "A brand of …" baja de línea en móvil; inline con " · " desde `md` |
 
 ### Buttons
